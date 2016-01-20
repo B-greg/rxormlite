@@ -14,7 +14,7 @@ public class DatabaseModel<T> {
     public final static String CREATED_AT = "created_at";
 
     @DatabaseField(id = true, columnName = ID)
-    public int id;
+    public Integer id;
     @DatabaseField(columnName = ENABLE)
     public Boolean enable;
     @DatabaseField(columnName = CREATED_AT)

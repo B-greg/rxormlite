@@ -2,6 +2,7 @@ package com.gregb.library.rxormlite.dao;
 
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +60,7 @@ public abstract class DatabaseManager<T extends DatabaseModel> implements IRepos
     @Override
     public void Update(T entite) {
         try {
+            entite.updatedAt = new Date();
             getHelper().getDao(getTableName()).update(entite);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,6 +98,8 @@ public abstract class DatabaseManager<T extends DatabaseModel> implements IRepos
     @Override
     public void CreateOrUpdate(T entite) {
         try {
+            entite.updatedAt = new Date();
+            if (entite.createdAt==null)entite.createdAt = new Date();
             getHelper().<T>getDao(getTableName()).createOrUpdate(entite);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,6 +110,7 @@ public abstract class DatabaseManager<T extends DatabaseModel> implements IRepos
     @Override
     public void Add(T entite) {
         try {
+            entite.updatedAt = entite.createdAt =new Date();
             getHelper().<T>getDao(getTableName()).create(entite);
         } catch (SQLException e) {
             e.printStackTrace();
